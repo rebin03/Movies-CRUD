@@ -3,13 +3,21 @@
 
 {% block style %}
 <style>
+    .icon {
+        color: rgb(10, 54, 34, 1);
+    }
     .icon:hover {
-        color: rgb(122, 122, 122);
+        color: rgba(13, 83, 51, 0.834);
         cursor: pointer;
     }
 
     a {
         color: black;
+    }
+
+    .form-control:focus {
+        border-color: #a3fb99;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.015), 0 0 8px rgb(98, 176, 113);
     }
 </style>
 {% endblock %}
@@ -20,17 +28,21 @@
     <div class="row">
         <div class="col-1"></div>
         <div class="col-8">
-            <h1 class="mb-3">{{movie.title}}</h1>
+            <h1 class="mb-3 text-success-emphasis">{{movie.title}}</h1>
             <div class="d-flex justify-content-between"style="width: 80%;">
-                <p>{{movie.year}} • {{movie.duration}}</p>
-                <div class="d-inline-block"><strong><i class="bi bi-star-fill text-warning"></i> {{movie.rating}}</strong>/10</div>
+                <p class="text-success-emphasis">{{movie.year}} • {{movie.duration}}</p>
+                <div class="d-inline-block text-success-emphasis"><strong><i class="bi bi-star-fill text-warning"></i> {{movie.rating}}</strong>/10</div>
             </div>
             <div>
                 <img src="{% static 'images/demo-poster.jpg' %}" alt="" style="width: 80%;">
             </div>
-            <div class="d-inline-block border border-2 border-secondary-subtle px-2 rounded rounded-4 my-3">{{movie.genre}}</div>
+            <div class="d-flex">
+                {% for g in genre_list %}
+                    <div class="d-inline-block border border-2 border-success px-2 rounded rounded-4 my-3 me-1">{{g}}</div>
+                {% endfor %}
+            </div>
             <p class="text-secondary" style="width: 80%;">{{movie.description}}</p>
-            <p><strong>Language</strong> {{movie.language}}</p>
+            <p><strong class="text-success-emphasis">Language</strong> {{movie.language}}</p>
         </div>
         <div class="col-3"></div>
     </div>

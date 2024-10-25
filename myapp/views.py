@@ -52,7 +52,10 @@ class MovieDetailView(View):
         id = kwargs.get('pk')
         movie = Movie.objects.get(id=id)
         
-        return render(request, self.template, {'movie':movie})
+        genre = movie.genre
+        genre_list = genre.split(', ')
+        
+        return render(request, self.template, {'movie':movie, 'genre_list':genre_list})
     
     
 class MovieDeleteView(View):

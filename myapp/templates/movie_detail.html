@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+    .icon:hover {
+        color: rgb(122, 122, 122);
+        cursor: pointer;
+    }
+
+    a {
+        color: black;
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<h1 class="p-4 position-fixed"><a href="{% url 'movie-list' %}"><i class="bi bi-arrow-left-circle-fill icon"></a></i></h1>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-8">
+            <h1 class="mb-3">{{movie.title}}</h1>
+            <div class="d-flex justify-content-between"style="width: 80%;">
+                <p>{{movie.year}} • {{movie.duration}}</p>
+                <div class="d-inline-block"><strong><i class="bi bi-star-fill text-warning"></i> {{movie.rating}}</strong>/10</div>
+            </div>
+            <div>
+                <img src="{% static 'images/demo-poster.jpg' %}" alt="" style="width: 80%;">
+            </div>
+            <div class="d-inline-block border border-2 border-secondary-subtle px-2 rounded rounded-4 my-3">{{movie.genre}}</div>
+            <p class="text-secondary" style="width: 80%;">{{movie.description}}</p>
+            <p><strong>Language</strong> {{movie.language}}</p>
+        </div>
+        <div class="col-3"></div>
+    </div>
+</div>
+{% endblock %}

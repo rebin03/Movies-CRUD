@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+    .hover-card:hover {
+        box-shadow: 0px 0px 21px -2px rgb(98, 176, 113);
+    }
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<div class="container my-5">
+    <h1 class="text-center mb-5 text-success-emphasis"><strong>MOVIES</strong></h1>
+    <div class="row">
+        {% for m in data %}
+            <div class="col-3 mb-3">
+                <a href="{% url 'movie-detail' m.id %}">
+                <div class="card hover-card" style="width: 100%;">
+                    <img src="{% static 'images/demo-poster.jpg' %}" class="card-img-top" alt="Movie poster">
+                    <div class="card-body">
+                      <h5 class="card-title text-success">{{m.title}}</h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Year: {{m.year}}</li>
+                      <li class="list-group-item">Genre: {{m.genre}}</li>
+                      <li class="list-group-item">Rating: {{m.rating}}</li>
+                      <li class="list-group-item">Language: {{m.language}}</li>
+                    </ul>
+                    <div class="card-body">
+                      <div class="d-grid gap-2 d-md-block">
+                        <a href="{% url 'movie-update' m.id %}"><button class="btn btn-dark" type="button">Edit</button></a>
+                        <a href="{% url 'movie-delete' m.id %}"><button class="btn btn-outline-danger" type="button">Delete</button></a>
+                      </div>
+                    </div>
+                </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

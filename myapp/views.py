@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
 from myapp.forms import MovieForm
 from myapp.models import Movie
+from django.conf import settings
+import os
 
 # Create your views here.
 
@@ -95,11 +97,22 @@ class MovieUpdateView(View):
     def post(self, request, *args, **kwargs):
         
         form_data = request.POST
-        form = self.form_class(form_data)
+        print(request.FILES)
+        form = self.form_class(form_data, request.FILES)
         id = kwargs.get('pk')
         
         if form.is_valid():
             data = form.cleaned_data
+            image = data.get('poster')
+            
+            image_path = os.path.join(settings.MEDIA_ROOT, 'uploads', image.name)
+            # Ensure the directory exists
+            os.makedirs(os.path.dirname(image_path), exist_ok=True)
+            with open(image_path, 'wb+') as destination:
+                for chunk in image.chunks():
+                    destination.write(chunk)
+                    
+            data['poster'] = os.path.join(settings.MEDIA_URL, 'uploads', image.name)
             
             Movie.objects.filter(id=id).update(**data)
             return redirect('movie-list')

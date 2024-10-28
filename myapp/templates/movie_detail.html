@@ -25,16 +25,17 @@
 {% block main_content %}
 <h1 class="p-4 position-fixed"><a href="{% url 'movie-list' %}"><i class="bi bi-arrow-left-circle-fill icon"></a></i></h1>
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-1"></div>
+    <div class="row" style="margin-top: 140px;">
+        <div class="col-3">
+            <div>
+                <img src="{{movie.poster}}" alt="" class="border border-2 border-success-subtle rounded rounded-3" style="width: 100%;">
+            </div>
+        </div>
         <div class="col-8">
             <h1 class="mb-3 text-success-emphasis">{{movie.title}}</h1>
-            <div class="d-flex justify-content-between"style="width: 80%;">
-                <p class="text-success-emphasis">{{movie.year}} • {{movie.duration}}</p>
+            <div class="d-flex"style="width: 80%;">
+                <p class="text-success-emphasis" style="margin-right:95px;">{{movie.year}} • {{movie.duration}}</p>
                 <div class="d-inline-block text-success-emphasis"><strong><i class="bi bi-star-fill text-warning"></i> {{movie.rating}}</strong>/10</div>
-            </div>
-            <div>
-                <img src="{% static 'images/demo-poster.jpg' %}" alt="" class="border border-2 border-success-subtle rounded rounded-3" style="width: 80%;">
             </div>
             <div class="d-flex">
                 {% for g in genre_list %}
@@ -44,7 +45,7 @@
             <p class="text-secondary" style="width: 80%;">{{movie.description}}</p>  
             <p><strong class="text-success-emphasis">Language</strong> {{movie.language}}</p>
         </div>
-        <div class="col-3"></div>
+        <!-- <div class="col-3"></div> -->
     </div>
 </div>
 {% endblock %}

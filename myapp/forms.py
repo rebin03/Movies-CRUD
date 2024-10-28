@@ -9,3 +9,4 @@ class MovieForm(forms.Form):
     language = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'language'}), label='')
     rating = forms.FloatField(widget=forms.NumberInput(attrs={'class':'form-control', 'placeholder':'rating'}), label='')
     description = forms.CharField(widget=forms.Textarea(attrs={'class':'form-control', 'rows':3, 'placeholder':'Description'}), label='')
+    poster = forms.ImageField(widget=forms.FileInput(attrs={'class':'form-control'}), label='Movie Poster', label_suffix='')

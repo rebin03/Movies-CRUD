@@ -34,7 +34,7 @@
         <div class="col-4"></div>
         <div class="col-4 form-shadow p-5 pt-3 rounded accordion">
             <h1 class="text-center mb-4">{{heading}}</h1>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <div class="d-grid col-6 mx-auto">

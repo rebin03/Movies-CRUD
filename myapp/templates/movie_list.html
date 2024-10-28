@@ -26,22 +26,24 @@
             <div class="col-3 mb-3">
                 <a href="{% url 'movie-detail' m.id %}">
                 <div class="card hover-card" style="width: 100%;">
-                    <img src="{% static 'images/demo-poster.jpg' %}" class="card-img-top" alt="Movie poster">
+                    {% if m.poster %}
+                    <img src="{{m.poster}}" class="card-img-top" alt="Movie poster" style="height: 250px;">
+                    {% endif%}
                     <div class="card-body">
                       <h5 class="card-title text-success">{{m.title}}</h5>
+                      <p class="d-inline-block me-3"><em>{{m.genre}}</em></p>
+                      <span><i class="bi bi-star text-warning"></i> <strong class="text-">{{m.rating}}</strong></span>
+                      <div class="d-grid gap-2 d-md-block">
+                        <a href="{% url 'movie-update' m.id %}" class="text-info me-2" style="text-decoration: none;"><i class="bi bi-pencil-square"></i></a>
+                        <a href="{% url 'movie-delete' m.id %}" class="text-danger" style="text-decoration: none;"><i class="bi bi-trash-fill"></i></a>
+                      </div>
                     </div>
-                    <ul class="list-group list-group-flush">
+                    <!-- <ul class="list-group list-group-flush">
                       <li class="list-group-item">Year: {{m.year}}</li>
                       <li class="list-group-item">Genre: {{m.genre}}</li>
                       <li class="list-group-item">Rating: {{m.rating}}</li>
                       <li class="list-group-item">Language: {{m.language}}</li>
-                    </ul>
-                    <div class="card-body">
-                      <div class="d-grid gap-2 d-md-block">
-                        <a href="{% url 'movie-update' m.id %}"><button class="btn btn-dark" type="button">Edit</button></a>
-                        <a href="{% url 'movie-delete' m.id %}"><button class="btn btn-outline-danger" type="button">Delete</button></a>
-                      </div>
-                    </div>
+                    </ul> -->
                 </div>
                 </a>
             </div>

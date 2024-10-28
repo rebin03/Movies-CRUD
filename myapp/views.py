@@ -4,6 +4,7 @@ from myapp.forms import MovieForm
 from myapp.models import Movie
 from django.conf import settings
 import os
+from django.db.models import Q
 
 # Create your views here.
 
@@ -39,8 +40,17 @@ class MovieListView(View):
     
     def get(self, request, *args, **kwargs):
         
+        search_text = request.GET.get('filter')
+        
         qs = Movie.objects.all()
         
+        if search_text:
+            qs = Movie.objects.filter(
+                Q(title__contains=search_text)|
+                Q(genre__contains=search_text)|
+                Q(language__contains=search_text)
+            )
+            
         return render(request, self.template, {'data':qs})
     
     

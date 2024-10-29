@@ -22,7 +22,8 @@ class MovieCreateView(View):
     def post(self, request, *args, **kwargs):
         
         form_data = request.POST
-        form = self.form_class(form_data)
+        files = request.FILES
+        form = self.form_class(form_data, files)
         
         if form.is_valid():
             data = form.cleaned_data
@@ -115,14 +116,14 @@ class MovieUpdateView(View):
             data = form.cleaned_data
             image = data.get('poster')
             
-            image_path = os.path.join(settings.MEDIA_ROOT, 'uploads', image.name)
+            image_path = os.path.join(settings.MEDIA_ROOT, 'images', image.name)
             # Ensure the directory exists
             os.makedirs(os.path.dirname(image_path), exist_ok=True)
             with open(image_path, 'wb+') as destination:
                 for chunk in image.chunks():
                     destination.write(chunk)
                     
-            data['poster'] = os.path.join(settings.MEDIA_URL, 'uploads', image.name)
+            data['poster'] = os.path.join(settings.MEDIA_URL, 'images', image.name)
             
             Movie.objects.filter(id=id).update(**data)
             return redirect('movie-list')

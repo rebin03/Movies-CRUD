@@ -22,12 +22,12 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('movie/add/', views.MovieCreateView.as_view(), name='movie-add'),
+    path('', views.MovieListView.as_view(), name='movie-list'),
     path('movie/list/', views.MovieListView.as_view(), name='movie-list'),
+    path('movie/add/', views.MovieCreateView.as_view(), name='movie-add'),
     path('movie/detail/<int:pk>', views.MovieDetailView.as_view(), name='movie-detail'),
     path('movie/remove/<int:pk>', views.MovieDeleteView.as_view(), name='movie-delete'),
     path('movie/update/<int:pk>', views.MovieUpdateView.as_view(), name='movie-update'),
 ]
 
-if settings.DEBUG:  
-        urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) 
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) 

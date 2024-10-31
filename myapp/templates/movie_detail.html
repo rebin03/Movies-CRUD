@@ -27,9 +27,15 @@
 <div class="container mt-5">
     <div class="row" style="margin-top: 140px;">
         <div class="col-3">
+            {% if movie.poster %}
             <div>
-                <img src="{{movie.poster}}" alt="" class="border border-2 border-success-subtle rounded rounded-3" style="width: 100%;">
+                <img src="{{movie.poster.url}}" alt="" class="border border-2 border-success-subtle rounded rounded-3" style="width: 100%;">
             </div>
+            {% else %}
+            <div>
+                <img src="{% static 'images/poster.jpg' %}" alt="" class="border border-2 border-success-subtle rounded rounded-3" style="width: 100%;">
+            </div>
+            {% endif %}
         </div>
         <div class="col-8">
             <h1 class="mb-3 text-success-emphasis">{{movie.title}}</h1>

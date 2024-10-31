@@ -34,7 +34,9 @@
                 <a href="{% url 'movie-detail' m.id %}">
                 <div class="card hover-card" style="width: 100%;">
                     {% if m.poster %}
-                    <img src="{{m.poster}}" class="card-img-top" alt="Movie poster" style="height: 250px;">
+                    <img src="{{m.poster.url}}" class="card-img-top" alt="Movie poster" style="height: 350px;">
+                    {% else %}
+                    <img src="{% static 'images/poster.jpg' %}" class="card-img-top" alt="Movie poster" style="height: 350px;">
                     {% endif%}
                     <div class="card-body">
                       <h5 class="card-title text-success">{{m.title}}</h5>

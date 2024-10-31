@@ -11,8 +11,10 @@ class Movie(models.Model):
     language = models.CharField(max_length=50)
     rating = models.FloatField()
     description = models.TextField()
-    poster = models.ImageField(upload_to='images/', null=True)
+    poster = models.ImageField(upload_to='images/', null=True, blank=True)
     
     
     def __str__(self):
         return self.title
+    
+    

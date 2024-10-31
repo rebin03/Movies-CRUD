@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
-from myapp.forms import MovieForm
+from myapp.forms import MovieForm, MovieUpdateForm
 from myapp.models import Movie
 from django.conf import settings
 import os
@@ -83,24 +83,14 @@ class MovieDeleteView(View):
 class MovieUpdateView(View):
     
     template = 'movie_add.html'
-    form_class = MovieForm
+    form_class = MovieUpdateForm
     
     def get(self, request, *args, **kwargs):
         
         id = kwargs.get('pk')
         movie_obj = get_object_or_404(Movie, id=id)
 
-        data = {
-            'title':movie_obj.title,
-            'year':movie_obj.year,
-            'genre':movie_obj.genre,
-            'duration':movie_obj.duration,
-            'language':movie_obj.language,
-            'rating':movie_obj.rating,
-            'description':movie_obj.description,
-        }
-
-        form = self.form_class(initial=data)
+        form = self.form_class(instance=movie_obj)
         
         return render(request, self.template, {'form':form, 'heading':'Update Movie', 'button':'Update'})
     
@@ -108,24 +98,16 @@ class MovieUpdateView(View):
     def post(self, request, *args, **kwargs):
         
         form_data = request.POST
-        print(request.FILES)
-        form = self.form_class(form_data, request.FILES)
+        files = request.FILES
+        
         id = kwargs.get('pk')
+        movie_obj = get_object_or_404(Movie, id=id)
+        
+        form = self.form_class(form_data, files, instance=movie_obj)
         
         if form.is_valid():
-            data = form.cleaned_data
-            image = data.get('poster')
             
-            image_path = os.path.join(settings.MEDIA_ROOT, 'images', image.name)
-            # Ensure the directory exists
-            os.makedirs(os.path.dirname(image_path), exist_ok=True)
-            with open(image_path, 'wb+') as destination:
-                for chunk in image.chunks():
-                    destination.write(chunk)
-                    
-            data['poster'] = os.path.join(settings.MEDIA_URL, 'images', image.name)
-            
-            Movie.objects.filter(id=id).update(**data)
+            form.save()
             return redirect('movie-list')
         
         return render(request, self.template, {'form':form, 'heading':'Update Movie', 'button':'Update'})

@@ -11,6 +11,10 @@
         color: black;
     }
 
+    a:hover {
+        background: azure;
+    }
+
     .form-control:focus {
         border-color: #a3fb99;
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.015), 0 0 8px rgb(98, 176, 113);
@@ -40,11 +44,11 @@
                     {% endif%}
                     <div class="card-body">
                       <h5 class="card-title text-success">{{m.title}}</h5>
-                      <p class="d-inline-block me-3"><em>{{m.genre}}</em></p>
-                      <span><i class="bi bi-star text-warning"></i> <strong class="text-">{{m.rating}}</strong></span>
-                      <div class="d-grid gap-2 d-md-block">
-                        <a href="{% url 'movie-update' m.id %}" class="text-info me-2" style="text-decoration: none;"><i class="bi bi-pencil-square"></i></a>
-                        <a href="{% url 'movie-delete' m.id %}" class="text-danger" style="text-decoration: none;"><i class="bi bi-trash-fill"></i></a>
+                      <!-- <p class="d-inline-block me-3"><em>{{m.genre}}</em></p>
+                      <span><i class="bi bi-star text-warning"></i> <strong class="text-">{{m.rating}}</strong></span> -->
+                      <div class="d-grid gap-2 d-md-block position-absolute top-0 end-0 p-2 py-3">
+                        <a href="{% url 'movie-update' m.id %}" class="text-info me-1 bg-dark p-1 rounded" style="text-decoration: none;"><i class="bi bi-pencil-square"></i></a>
+                        <a href="{% url 'movie-delete' m.id %}" class="text-danger bg-dark p-1 rounded" style="text-decoration: none;"><i class="bi bi-trash-fill"></i></a>
                       </div>
                     </div>
                     <!-- <ul class="list-group list-group-flush">

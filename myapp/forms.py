@@ -1,5 +1,7 @@
 from django import forms
 from myapp.models import Movie
+from django.contrib.auth.models import User
+
 
 class MovieForm(forms.Form):
     
@@ -39,3 +41,21 @@ class MovieUpdateForm(forms.ModelForm):
             'description':'',
             'poster':'Choose movie poster'
         }
+        
+
+class SignUpForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password']
+
+        widgets = {
+            'username': forms.TextInput(attrs={'class':'form-control mb-3'}),
+            'email': forms.EmailInput(attrs={'class':'form-control mb-3'}),
+            'password': forms.PasswordInput(attrs={'class':'form-control mb-3'}),
+        }
+        
+
+class SignInForm(forms.Form):
+    
+    username = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control mb-3'}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class':'form-control mb-3'}))

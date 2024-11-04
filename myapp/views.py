@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import View
-from myapp.forms import MovieForm, MovieUpdateForm
+from myapp.forms import MovieForm, MovieUpdateForm, SignUpForm, SignInForm
 from myapp.models import Movie
-from django.conf import settings
-import os
 from django.db.models import Q
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -111,3 +110,41 @@ class MovieUpdateView(View):
             return redirect('movie-list')
         
         return render(request, self.template, {'form':form, 'heading':'Update Movie', 'button':'Update'})
+    
+    
+class SignUpView(View):
+    
+    template_name = 'signup_signin.html'
+    form_class = SignUpForm
+    
+    def get(self, request, *args, **kwargs):
+        
+        form = self.form_class()
+
+        return render(request, self.template_name, {'form': form, 'heading':'Sign Up'})
+    
+    
+    def post(self, request, *args, **kwargs):
+        
+        form_data = request.POST
+        form = self.form_class(form_data)
+        
+        if form.is_valid():
+            
+            data = form.cleaned_data
+            User.objects.create_user(**data)
+            return redirect('signin')
+
+        return render(request, self.template_name, {'form': form, 'heading': 'Sign Up'})
+    
+
+class SignInView(View):
+    
+    template_name = 'signup_signin.html'
+    form_class = SignInForm
+    
+    def get(self, request, *args, **kwargs):
+        
+        form = self.form_class()
+        
+        return render(request, self.template_name, {'form': form, 'heading': 'Sign In'})

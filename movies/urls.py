@@ -28,6 +28,8 @@ urlpatterns = [
     path('movie/detail/<int:pk>', views.MovieDetailView.as_view(), name='movie-detail'),
     path('movie/remove/<int:pk>', views.MovieDeleteView.as_view(), name='movie-delete'),
     path('movie/update/<int:pk>', views.MovieUpdateView.as_view(), name='movie-update'),
+    path('register/', views.SignUpView.as_view(), name='register'),
+    path('signin/', views.SignInView.as_view(), name='signin'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) 

@@ -30,6 +30,7 @@ urlpatterns = [
     path('movie/update/<int:pk>', views.MovieUpdateView.as_view(), name='movie-update'),
     path('register/', views.SignUpView.as_view(), name='register'),
     path('signin/', views.SignInView.as_view(), name='signin'),
+    path('signout/', views.SignOutView.as_view(), name='signout'),
 ]
 
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT) 
+urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

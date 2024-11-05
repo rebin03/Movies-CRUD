@@ -4,6 +4,7 @@ from myapp.forms import MovieForm, MovieUpdateForm, SignUpForm, SignInForm
 from myapp.models import Movie
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
 
 # Create your views here.
 
@@ -39,6 +40,10 @@ class MovieListView(View):
     template = 'movie_list.html'
     
     def get(self, request, *args, **kwargs):
+        
+        if not request.user.is_authenticated:
+            
+            return redirect('signin')
         
         search_text = request.GET.get('filter')
         
@@ -148,3 +153,38 @@ class SignInView(View):
         form = self.form_class()
         
         return render(request, self.template_name, {'form': form, 'heading': 'Sign In'})
+    
+    
+    def post(self, request, *args, **kwargs):
+        
+        form_data = request.POST
+        form = self.form_class(form_data)
+
+        if form.is_valid():
+            
+            data = form.cleaned_data
+            
+            # fetch user credential
+            uname = data.get('username')
+            pwd = data.get('password')
+
+            # Check the credential is valid or not
+            user_obj = authenticate(request, username=uname, password=pwd)
+
+            # Create user session if the credential is valid
+            if user_obj:
+                
+                 login(request, user_obj)
+                 
+                 return redirect('movie-list')
+        
+        return render(request, self.template_name, {'form': form, 'heading': 'Sign In'})
+    
+    
+class SignOutView(View):
+    
+    def get(self, request, *args, **kwargs):
+        
+        logout(request)
+
+        return redirect('signin')

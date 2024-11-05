@@ -53,6 +53,11 @@
             {% block search %}
             
             {% endblock %}
+            <ul class="navbar-nav mb-2 ms-2 mb-lg-0">
+              <li class="nav-item">
+                <a href="{% url 'signout' %}" class="btn btn-secondary">Log out > {{request.user}}</a>
+              </li>
+            </ul>
           </div>
         </div>
       </nav>

@@ -11,7 +11,7 @@
     <div class="container my-5">
         <div class="row">
             <div class="col-4"></div>
-            <div class="col-4 shadow rounded rounded-4 p-4">
+            <div class="col-4 shadow rounded rounded-4 p-4 pb-0">
                 <h1 class="text-center">{{heading}}</h1>
                 <form action="" method="post">
                     {% csrf_token %}
@@ -19,6 +19,11 @@
                     <div class="d-grid col-6 mx-auto">
                         <button class="btn btn-primary" type="submit">{{heading}}</button>
                     </div>
+                    {% if heading == 'Sign In' %}
+                    <p class="text-center mt-3">New user? <a href="{% url 'register' %}">Register</a></p>
+                    {% else %}
+                    <p class="text-center mt-3">Already registered? <a href="{% url 'signin' %}">Sign In</a></p>
+                    {% endif %}
                 </form>
             </div>
             <div class="col-4"></div>

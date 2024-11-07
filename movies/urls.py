@@ -22,14 +22,13 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.MovieListView.as_view(), name='movie-list'),
     path('movie/list/', views.MovieListView.as_view(), name='movie-list'),
     path('movie/add/', views.MovieCreateView.as_view(), name='movie-add'),
     path('movie/detail/<int:pk>', views.MovieDetailView.as_view(), name='movie-detail'),
     path('movie/remove/<int:pk>', views.MovieDeleteView.as_view(), name='movie-delete'),
     path('movie/update/<int:pk>', views.MovieUpdateView.as_view(), name='movie-update'),
     path('register/', views.SignUpView.as_view(), name='register'),
-    path('signin/', views.SignInView.as_view(), name='signin'),
+    path('', views.SignInView.as_view(), name='signin'),
     path('signout/', views.SignOutView.as_view(), name='signout'),
 ]
 

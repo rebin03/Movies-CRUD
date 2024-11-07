@@ -7,10 +7,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from myapp.decorators import signin_required
 from django.utils.decorators import method_decorator
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
 
-@method_decorator(signin_required, name='dispatch')
+decorators = [signin_required, never_cache]
+
+@method_decorator(decorators, name='dispatch')
 class MovieCreateView(View):
     
     template = 'movie_add.html'
@@ -38,7 +41,7 @@ class MovieCreateView(View):
         return render(request, self.template, {'form':form, 'heading':'Add Movies', 'button':'ADD'})
     
  
-@method_decorator(signin_required, name='dispatch')   
+@method_decorator(decorators, name='dispatch')   
 class MovieListView(View):
     
     template = 'movie_list.html'
@@ -59,7 +62,7 @@ class MovieListView(View):
         return render(request, self.template, {'data':qs})
     
 
-@method_decorator(signin_required, name='dispatch')    
+@method_decorator(decorators, name='dispatch')    
 class MovieDetailView(View):
     
     template = 'movie_detail.html'
@@ -75,7 +78,7 @@ class MovieDetailView(View):
         return render(request, self.template, {'movie':movie, 'genre_list':genre_list})
     
 
-@method_decorator(signin_required, name='dispatch')    
+@method_decorator(decorators, name='dispatch')    
 class MovieDeleteView(View):
     
     def get(self, request, *args, **kwargs):
@@ -86,7 +89,7 @@ class MovieDeleteView(View):
         return redirect('movie-list')
     
 
-@method_decorator(signin_required, name='dispatch')
+@method_decorator(decorators, name='dispatch')
 class MovieUpdateView(View):
     
     template = 'movie_add.html'
@@ -184,7 +187,7 @@ class SignInView(View):
         return render(request, self.template_name, {'form': form, 'heading': 'Sign In'})
     
 
-@method_decorator(signin_required, name='dispatch')    
+@method_decorator(decorators, name='dispatch')    
 class SignOutView(View):
     
     def get(self, request, *args, **kwargs):

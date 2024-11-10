@@ -24,7 +24,12 @@
 
 {% block search %}
 <form class="d-flex" role="search" action="{% url 'movie-list' %}">
-    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="filter">
+    <input list="suggestions" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="filter">
+    <datalist id="suggestions">
+        {% for record in records %}
+            <option value="{{record}}">
+        {% endfor %}
+    </datalist>
     <button class="btn btn-dark" type="submit"><i class="bi bi-search"></i></button>
 </form>
 {% endblock %}

@@ -8,6 +8,7 @@ from django.contrib.auth import authenticate, login, logout
 from myapp.decorators import signin_required
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import never_cache
+from django.db.models import Q
 
 # Create your views here.
 
@@ -50,6 +51,15 @@ class MovieListView(View):
         
         search_text = request.GET.get('filter')
         
+        all__title = Movie.objects.values_list('title', flat=True).distinct()
+        all__genre = Movie.objects.values_list('genre', flat=True).distinct()
+        all__language = Movie.objects.values_list('language', flat=True).distinct()
+        
+        all_record = []
+        all_record.extend(all__title)
+        all_record.extend(all__genre)
+        all_record.extend(all__language)
+        
         qs = Movie.objects.all()
         
         if search_text:
@@ -59,7 +69,7 @@ class MovieListView(View):
                 Q(language__contains=search_text)
             )
             
-        return render(request, self.template, {'data':qs})
+        return render(request, self.template, {'data':qs, 'records':all_record})
     
 
 @method_decorator(decorators, name='dispatch')    
